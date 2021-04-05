@@ -11,14 +11,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A brief summary of what is natural language processing, it’s challenges and applications." />
 <meta property="og:description" content="A brief summary of what is natural language processing, it’s challenges and applications." />
-<link rel="canonical" href="https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html" />
-<meta property="og:url" content="https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html" />
+<link rel="canonical" href="https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/2021/04/05/What-is-NLP.html" />
+<meta property="og:url" content="https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/2021/04/05/What-is-NLP.html" />
 <meta property="og:site_name" content="Sagar Thacker" />
 <meta property="og:image" content="https://sagar118.github.io/blog/images/posts/what_is_NLP_image.jpg" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-04-05T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html","@type":"BlogPosting","headline":"What is Natural Language Processing?","dateModified":"2021-04-05T00:00:00-05:00","datePublished":"2021-04-05T00:00:00-05:00","image":"https://sagar118.github.io/blog/images/posts/what_is_NLP_image.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html"},"author":{"@type":"Person","name":"Sagar Thacker"},"description":"A brief summary of what is natural language processing, it’s challenges and applications.","@context":"https://schema.org"}</script>
+{"url":"https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/2021/04/05/What-is-NLP.html","@type":"BlogPosting","headline":"What is Natural Language Processing?","dateModified":"2021-04-05T00:00:00-05:00","datePublished":"2021-04-05T00:00:00-05:00","image":"https://sagar118.github.io/blog/images/posts/what_is_NLP_image.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/2021/04/05/What-is-NLP.html"},"author":{"@type":"Person","name":"Sagar Thacker"},"description":"A brief summary of what is natural language processing, it’s challenges and applications.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sagar118.github.io/blog/feed.xml" title="Sagar Thacker" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -92,157 +92,91 @@ window.onload = wrap_img;
         &nbsp;
       
         <a class="category-tags-link" href="/blog/categories/#Natural Language Processing">Natural Language Processing</a>
-        &nbsp;
-      
-        <a class="category-tags-link" href="/blog/categories/#NLP">NLP</a>
         
       
       </p>
     
 
-    
-      
-        <div class="pb-5 d-flex flex-wrap flex-justify-end">
-          <div class="px-2">
-
-    <a href="https://github.com/sagar118/blog/tree/master/_notebooks/2021-04-05-What-is-NLP.ipynb" role="button" target="_blank">
-<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
-    </a>
-</div>
-
-          
-          <div class="px-2">
-    <a href="https://colab.research.google.com/github/sagar118/blog/blob/master/_notebooks/2021-04-05-What-is-NLP.ipynb" target="_blank">
-        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
-    </a>
-</div>
-        </div>
-      </header>
+    </header>
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#History-of-Natural-Language-Processing:">History of Natural Language Processing: </a></li>
-<li class="toc-entry toc-h2"><a href="#Challenges-in-Natural-language-processing:">Challenges in Natural language processing: </a></li>
-<li class="toc-entry toc-h2"><a href="#Applications:">Applications: </a></li>
-</ul><!--
-#################################################
-### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
-#################################################
-# file to edit: _notebooks/2021-04-05-What-is-NLP.ipynb
--->
+<li class="toc-entry toc-h2"><a href="#history-of-natural-language-processing">History of Natural Language Processing:</a></li>
+<li class="toc-entry toc-h2"><a href="#challenges">Challenges:</a></li>
+<li class="toc-entry toc-h2"><a href="#applications">Applications:</a></li>
+</ul><p>Natural language processing is a branch of Artificial Intelligence which aims to bridge the gap between how a computer and human communicate with each other. The two major handles used for communication are speech and written i.e. text.</p>
 
-<div class="container" id="notebook-container">
-        
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Natural language processing is a branch of Artificial Intelligence which aims to bridge the gap between how a computer and human communicate with each other. The two major handles used for communication are speech and written i.e. text.</p>
+<h2 id="history-of-natural-language-processing">
+<a class="anchor" href="#history-of-natural-language-processing" aria-hidden="true"><span class="octicon octicon-link"></span></a>History of Natural Language Processing:</h2>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="History-of-Natural-Language-Processing:">
-<a class="anchor" href="#History-of-Natural-Language-Processing:" aria-hidden="true"><span class="octicon octicon-link"></span></a>History of Natural Language Processing:<a class="anchor-link" href="#History-of-Natural-Language-Processing:"> </a>
-</h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>The dawn of NLP can be dated back to the early 1900s. In 1950, Alan Turing published his famous article “<a href="https://en.wikipedia.org/wiki/Computing_Machinery_and_Intelligence">Computing Machinery and Intelligence</a>” which proposed what is now called the Turing test as a criterion of intelligence. It tests the ability of the computer program to impersonate a human in a real-time conversation with a human judge where the judge is unable to distinguish the human from the computer program. In 1954, the <a href="https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment">Georgetown experiment</a> automatically translated more than sixty Russian words into English.</p>
+
 <p>In 1957, Noam Chomsky’s Syntactic Structures a rule-based system of syntactic structures with “<a href="https://en.wikipedia.org/wiki/Universal_grammar">universal grammar</a>” was an incredible advancement. Up to the 1980’s most of the NLP systems were based on complex hand-written rules but in the late 1980s by the introduction of machine learning algorithms for language processing revolutionized the field. A steady increase in computational power resulting from <a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore’s law</a> and use of statistical models that use probabilistic measures to map the features making up the input data. Watson an artificial intelligence software designed as a question answering system won the Jeopardy contest, defeating the best human players in February 2011.</p>
+
 <p>Development of famous virtual assistants like Siri in 2011, Amazon Alexa in 2014, and Google Assistant in 2016. The use of deep learning produced better results than the state-of-the-art in many natural language processing tasks, such as machine translation, text classification, and many more. Recent advancements include the use of network architecture of the transformer which is based on the attention mechanism that has produced better results in various NLP tasks.</p>
+
 <p>We humans in our daily life overlook the powerful ability of our human brain to read, understand the meaning of a word, it’s context (how does it relate to each other), understand humor, sarcasm, and thousand other things. How do we teach this to a computer?</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Challenges-in-Natural-language-processing:">
-<a class="anchor" href="#Challenges-in-Natural-language-processing:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Challenges in Natural language processing:<a class="anchor-link" href="#Challenges-in-Natural-language-processing:"> </a>
-</h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="challenges">
+<a class="anchor" href="#challenges" aria-hidden="true"><span class="octicon octicon-link"></span></a>Challenges:</h2>
+
 <p><strong>1. Ambiguity</strong>: <br>
 In a natural language, words are unique but their meaning may differ based on the context in which it is used. One classical example used is:</p>
 <ul>
-<li>The bank is a financial institution where customers can save or borrow money.</li>
-<li>Tom was sitting by the banks of the river.</li>
+  <li>The bank is a financial institution where customers can save or borrow money.</li>
+  <li>Tom was sitting by the banks of the river.</li>
 </ul>
+
 <p>In this example, we can see that the word “bank” is used in two different ways. The word is the same but the meaning is different. This is because the context in which the word is used is different.</p>
+
 <p><strong>2. Co-Referencing</strong>:<br>
 It is a process to find all the phrases in the document that refer to the same entity. Example: Harry kept the paneer on the plate and ate it. Here it refers to the paneer that he ate which was kept on the plate.</p>
+
 <p><strong>3. Information Extraction</strong>:<br>
 Identifying phrases in a language that refer to specific types of entities and relations in text. Named Entity Recognition (NER) is the task used to identify the names of people, organizations, places, etc, in a text.<br>
 Example:<br>
 Tom used to work at FedEx and lives in Mumbai, India.<br>
 where Person = Tom, organization = FedEx and Place = Mumbai, India</p>
+
 <p><strong>4. Personality, intention, emotions, and style</strong>:<br>
 Different authors may have different personalities, intentions, emotions, and styles to convey the same idea. Based on these factors the underlying idea can be interpreted in different ways. Use of humor or sarcasm may convey a meaning that is opposite of the literal one.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Applications:">
-<a class="anchor" href="#Applications:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Applications:<a class="anchor-link" href="#Applications:"> </a>
-</h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="applications">
+<a class="anchor" href="#applications" aria-hidden="true"><span class="octicon octicon-link"></span></a>Applications:</h2>
+
 <p><strong>1. Machine Translation</strong>: <br>
 The idea behind machine translation is to develop a system that is capable of translating text from one language to another without any human intervention. Only translating the text from one language to another is not the key. Understanding the meaning behind the text and translating it to some other language is the crux of it.<br>
 Example: Google Translate</p>
+
 <p><strong>2. Automatic summarization</strong>: <br>
 We all love to read storybooks and always a good storybook will have a summary at the end that highlights the important things about the story. Likewise take any piece of text, a story, a news article, etc, and develop a system that can automatically summary the piece of text.<br>
 Example: Inshorts – an app that summarizes each news article in 60 words.</p>
+
 <p><strong>3. Sentiment Analysis</strong>: <br>
 It deals with the study of extracting opinions and sentiment that are not always explicitly expressed. For instance it helps the company to understand the level of consumer satisfaction for its goods and services.<br>
 Example: “I love the new iPhone and it has a great camera.”.</p>
+
 <p>Another branch of sentiment analysis is “Aspect based Sentiment Analysis” where it tries to extract opinions for each aspect from the customer review.<br>
 Example: “The new iPhone is great it has a great camera but the battery life is not that good.” Here the customer is satisfied with the camera aspect of the iPhone but not the battery life.</p>
+
 <p><strong>4. Text Classification</strong>: <br>
 Organizing text documents into predefined categories enables to classify the information or any activity.<br>
 Examples: Classifying an email as spam or not spam.</p>
+
 <p><strong>5. Question Answering</strong>: <br>
 Question answering deals with a system that can answer questions posed by humans in natural language. Sounds simple yet building the knowledge base, understanding the text, and to answer in natural language is altogether a thing in itself.</p>
+
 <p><strong>6. Chatbots</strong>: <br>
 Chatbots are a piece of software that can simulate a conversation (or chat) with a user in natural language through websites, apps, messaging applications, etc. Chatbots are a natural evolution of question answering system but are one step further with their ability to understand the text and engage in a conversation.</p>
+
 <p><strong>7. Speech Recognition</strong>: <br>
 Using our voice to interact with our phones has become a common phenomenon.<br>
 For example to ask questions to our voice assistants like Google Assistant/Siri/Cortana, use of voice to type a piece of text.<br>
 Recognizing speech has replaced the method by which we interact with our devices and made it so convenient.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>Recent advancements in NLP have deepened our knowledge on how to tackle the various challenges in NLP. Also, this new decade will be filled with excitement and breakthroughs that awaits us. Stay tunned to deep dive into the world of NLP.</p>
+
 <p>Share if you like it, comment if you loved it. Hope to see you guys in the next one. Peace!</p>
-
-</div>
-</div>
-</div>
-</div>
-
-
 
   </div><!-- from https://github.com/utterance/utterances -->
 <script src="https://utteranc.es/client.js"
@@ -252,7 +186,7 @@ Recognizing speech has replaced the method by which we interact with our devices
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html" hidden></a>
+</script><a class="u-url" href="/blog/machine%20learning/natural%20language%20processing/2021/04/05/What-is-NLP.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
