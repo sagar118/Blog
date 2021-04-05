@@ -112,10 +112,10 @@ Additional Resources:
 Natural language processing (NLP) is a branch of Artificial Intelligence which aims to bridge the gap between how a computer and human communicate with each other. The two major handles used for communication are speech and written i.e. text. If you are unfamiliar with what NLP is, this blog could help in understanding what NLP is.
 
 Courses:
-1. (Youtube) [Natural Language Processing | University of Michigan](https://www.youtube.com/watch?v=n25JjoixM3I&list=PLLssT5z_DsK8BdawOVCCaTCO99Ya58ryR)
+1. (Youtube) [Natural Language Processing by University of Michigan](https://www.youtube.com/watch?v=n25JjoixM3I&list=PLLssT5z_DsK8BdawOVCCaTCO99Ya58ryR)
 2. [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/)
-3. [Stanford CS224N: NLP with Deep Learning](https://www.youtube.com/watch?v=8rXD5-xhemo&list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z) | Winter 2019 – Stanford
-4. [Lecture Collection | Natural Language Processing with Deep Learning (Winter 2017)](https://www.youtube.com/watch?v=OQQ-W_63UgQ&list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6) – Stanford
+3. [Stanford CS224N: NLP with Deep Learning](https://www.youtube.com/watch?v=8rXD5-xhemo&list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z) Winter 2019 – Stanford
+4. [Lecture Collection on Natural Language Processing with Deep Learning (Winter 2017)](https://www.youtube.com/watch?v=OQQ-W_63UgQ&list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6) – Stanford
 5. [CS224d: Deep Learning for Natural Language Processing](https://cs224d.stanford.edu/syllabus.html) – Stanford
 6. [Natural Language Processing Specialization](https://www.coursera.org/specializations/natural-language-processing) offered by deeplearning.ai on Coursera (Intermediate level)
 7. [Natural Language Processing](https://www.coursera.org/learn/language-processing) offered by National Research University Higher School of Economics on Coursera (Advanced level course)
