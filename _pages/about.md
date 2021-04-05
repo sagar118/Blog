@@ -4,8 +4,4 @@ title: About Me
 permalink: /about/
 ---
 
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
-
-
-
-[^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.
+A Data Scientist who is passionate about solving pressing challenges across computational linguistics, healthcare, and information access. Proficient in developing complex machine learning and statistical modeling algorithms/techniques for identifying patterns and extracting valuable insights.
