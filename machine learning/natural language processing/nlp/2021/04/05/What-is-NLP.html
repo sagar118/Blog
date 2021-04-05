@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>What is Natural Language Processing? | Sagar Thacker</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="What is Natural Language Processing?" />
+<meta name="author" content="Sagar Thacker" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A brief summary of what is natural language processing, it’s challenges and applications." />
+<meta property="og:description" content="A brief summary of what is natural language processing, it’s challenges and applications." />
+<link rel="canonical" href="https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html" />
+<meta property="og:url" content="https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html" />
+<meta property="og:site_name" content="Sagar Thacker" />
+<meta property="og:image" content="https://sagar118.github.io/blog/images/posts/what_is_NLP_image.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-05T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"A brief summary of what is natural language processing, it’s challenges and applications.","url":"https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://sagar118.github.io/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html"},"headline":"What is Natural Language Processing?","dateModified":"2021-04-05T00:00:00-05:00","datePublished":"2021-04-05T00:00:00-05:00","author":{"@type":"Person","name":"Sagar Thacker"},"image":"https://sagar118.github.io/blog/images/posts/what_is_NLP_image.jpg","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sagar118.github.io/blog/feed.xml" title="Sagar Thacker" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Sagar Thacker</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">What is Natural Language Processing?</h1><p class="page-description">A brief summary of what is natural language processing, it's challenges and applications.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-04-05T00:00:00-05:00" itemprop="datePublished">
+        Apr 5, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Sagar Thacker</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#Machine Learning">Machine Learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#Natural Language Processing">Natural Language Processing</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#NLP">NLP</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/sagar118/blog/tree/master/_notebooks/2021-04-05-What-is-NLP.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/sagar118/blog/blob/master/_notebooks/2021-04-05-What-is-NLP.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#History-of-Natural-Language-Processing:">History of Natural Language Processing: </a></li>
+<li class="toc-entry toc-h2"><a href="#Challenges-in-Natural-language-processing:">Challenges in Natural language processing: </a></li>
+<li class="toc-entry toc-h2"><a href="#Applications:">Applications: </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-04-05-What-is-NLP.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Natural language processing is a branch of Artificial Intelligence which aims to bridge the gap between how a computer and human communicate with each other. The two major handles used for communication are speech and written i.e. text.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="History-of-Natural-Language-Processing:">
+<a class="anchor" href="#History-of-Natural-Language-Processing:" aria-hidden="true"><span class="octicon octicon-link"></span></a>History of Natural Language Processing:<a class="anchor-link" href="#History-of-Natural-Language-Processing:"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The dawn of NLP can be dated back to the early 1900s. In 1950, Alan Turing published his famous article “<a href="https://en.wikipedia.org/wiki/Computing_Machinery_and_Intelligence">Computing Machinery and Intelligence</a>” which proposed what is now called the Turing test as a criterion of intelligence. It tests the ability of the computer program to impersonate a human in a real-time conversation with a human judge where the judge is unable to distinguish the human from the computer program. In 1954, the <a href="https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment">Georgetown experiment</a> automatically translated more than sixty Russian words into English.</p>
+<p>In 1957, Noam Chomsky’s Syntactic Structures a rule-based system of syntactic structures with “<a href="https://en.wikipedia.org/wiki/Universal_grammar">universal grammar</a>” was an incredible advancement. Up to the 1980’s most of the NLP systems were based on complex hand-written rules but in the late 1980s by the introduction of machine learning algorithms for language processing revolutionized the field. A steady increase in computational power resulting from <a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore’s law</a> and use of statistical models that use probabilistic measures to map the features making up the input data. Watson an artificial intelligence software designed as a question answering system won the Jeopardy contest, defeating the best human players in February 2011.</p>
+<p>Development of famous virtual assistants like Siri in 2011, Amazon Alexa in 2014, and Google Assistant in 2016. The use of deep learning produced better results than the state-of-the-art in many natural language processing tasks, such as machine translation, text classification, and many more. Recent advancements include the use of network architecture of the transformer which is based on the attention mechanism that has produced better results in various NLP tasks.</p>
+<p>We humans in our daily life overlook the powerful ability of our human brain to read, understand the meaning of a word, it’s context (how does it relate to each other), understand humor, sarcasm, and thousand other things. How do we teach this to a computer?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Challenges-in-Natural-language-processing:">
+<a class="anchor" href="#Challenges-in-Natural-language-processing:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Challenges in Natural language processing:<a class="anchor-link" href="#Challenges-in-Natural-language-processing:"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>1. Ambiguity</strong>: <br>
+In a natural language, words are unique but their meaning may differ based on the context in which it is used. One classical example used is:</p>
+<ul>
+<li>The bank is a financial institution where customers can save or borrow money.</li>
+<li>Tom was sitting by the banks of the river.</li>
+</ul>
+<p>In this example, we can see that the word “bank” is used in two different ways. The word is the same but the meaning is different. This is because the context in which the word is used is different.</p>
+<p><strong>2. Co-Referencing</strong>:<br>
+It is a process to find all the phrases in the document that refer to the same entity. Example: Harry kept the paneer on the plate and ate it. Here it refers to the paneer that he ate which was kept on the plate.</p>
+<p><strong>3. Information Extraction</strong>:<br>
+Identifying phrases in a language that refer to specific types of entities and relations in text. Named Entity Recognition (NER) is the task used to identify the names of people, organizations, places, etc, in a text.<br>
+Example:<br>
+Tom used to work at FedEx and lives in Mumbai, India.<br>
+where Person = Tom, organization = FedEx and Place = Mumbai, India</p>
+<p><strong>4. Personality, intention, emotions, and style</strong>:<br>
+Different authors may have different personalities, intentions, emotions, and styles to convey the same idea. Based on these factors the underlying idea can be interpreted in different ways. Use of humor or sarcasm may convey a meaning that is opposite of the literal one.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Applications:">
+<a class="anchor" href="#Applications:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Applications:<a class="anchor-link" href="#Applications:"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>1. Machine Translation</strong>: <br>
+The idea behind machine translation is to develop a system that is capable of translating text from one language to another without any human intervention. Only translating the text from one language to another is not the key. Understanding the meaning behind the text and translating it to some other language is the crux of it.<br>
+Example: Google Translate</p>
+<p><strong>2. Automatic summarization</strong>: <br>
+We all love to read storybooks and always a good storybook will have a summary at the end that highlights the important things about the story. Likewise take any piece of text, a story, a news article, etc, and develop a system that can automatically summary the piece of text.<br>
+Example: Inshorts – an app that summarizes each news article in 60 words.</p>
+<p><strong>3. Sentiment Analysis</strong>: <br>
+It deals with the study of extracting opinions and sentiment that are not always explicitly expressed. For instance it helps the company to understand the level of consumer satisfaction for its goods and services.<br>
+Example: “I love the new iPhone and it has a great camera.”.</p>
+<p>Another branch of sentiment analysis is “Aspect based Sentiment Analysis” where it tries to extract opinions for each aspect from the customer review.<br>
+Example: “The new iPhone is great it has a great camera but the battery life is not that good.” Here the customer is satisfied with the camera aspect of the iPhone but not the battery life.</p>
+<p><strong>4. Text Classification</strong>: <br>
+Organizing text documents into predefined categories enables to classify the information or any activity.<br>
+Examples: Classifying an email as spam or not spam.</p>
+<p><strong>5. Question Answering</strong>: <br>
+Question answering deals with a system that can answer questions posed by humans in natural language. Sounds simple yet building the knowledge base, understanding the text, and to answer in natural language is altogether a thing in itself.</p>
+<p><strong>6. Chatbots</strong>: <br>
+Chatbots are a piece of software that can simulate a conversation (or chat) with a user in natural language through websites, apps, messaging applications, etc. Chatbots are a natural evolution of question answering system but are one step further with their ability to understand the text and engage in a conversation.</p>
+<p><strong>7. Speech Recognition</strong>: <br>
+Using our voice to interact with our phones has become a common phenomenon.<br>
+For example to ask questions to our voice assistants like Google Assistant/Siri/Cortana, use of voice to type a piece of text.<br>
+Recognizing speech has replaced the method by which we interact with our devices and made it so convenient.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Recent advancements in NLP have deepened our knowledge on how to tackle the various challenges in NLP. Also, this new decade will be filled with excitement and breakthroughs that awaits us. Stay tunned to deep dive into the world of NLP.</p>
+<p>Share if you like it, comment if you loved it. Hope to see you guys in the next one. Peace!</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="sagar118/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/machine%20learning/natural%20language%20processing/nlp/2021/04/05/What-is-NLP.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A blog on Algorithms, Data Science and Artificial Intelligence.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/sagar118" title="sagar118"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/sagarthacker118" title="sagarthacker118"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
