@@ -1,1 +1,1 @@
-Sitemap: https://sagarthacker.com/blog/sitemap.xml
+Sitemap: https://sagarthacker.com/sitemap.xml
