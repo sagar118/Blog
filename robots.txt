@@ -1,1 +1,1 @@
-Sitemap: https://sagar118.github.io/blog/sitemap.xml
+Sitemap: https://sagarthacker.com/blog/sitemap.xml
