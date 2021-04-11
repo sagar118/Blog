@@ -22,7 +22,7 @@ Development of famous virtual assistants like Siri in 2011, Amazon Alexa in 2014
 
 We humans in our daily life overlook the powerful ability of our human brain to read, understand the meaning of a word, it’s context (how does it relate to each other), understand humor, sarcasm, and thousand other things. How do we teach this to a computer?
 
-## Challenges:
+## Challenges
 
 **1. Ambiguity**: <br>
 In a natural language, words are unique but their meaning may differ based on the context in which it is used. One classical example used is:
@@ -43,7 +43,7 @@ where Person = Tom, organization = FedEx and Place = Mumbai, India
 **4. Personality, intention, emotions, and style**:<br>
 Different authors may have different personalities, intentions, emotions, and styles to convey the same idea. Based on these factors the underlying idea can be interpreted in different ways. Use of humor or sarcasm may convey a meaning that is opposite of the literal one.
 
-## Applications:
+## Applications
 
 **1. Machine Translation**: <br>
 The idea behind machine translation is to develop a system that is capable of translating text from one language to another without any human intervention. Only translating the text from one language to another is not the key. Understanding the meaning behind the text and translating it to some other language is the crux of it.<br>
