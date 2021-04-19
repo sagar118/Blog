@@ -1,0 +1,3161 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Text Preprocessing | Sagar Thacker</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Text Preprocessing" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Vairous preprocessing steps required to clean and prepare your data in NLP" />
+<meta property="og:description" content="Vairous preprocessing steps required to clean and prepare your data in NLP" />
+<link rel="canonical" href="https://sagarthacker.com/text%20preprocessing/natural%20language%20processing/2021/04/11/Text-Preprocessing.html" />
+<meta property="og:url" content="https://sagarthacker.com/text%20preprocessing/natural%20language%20processing/2021/04/11/Text-Preprocessing.html" />
+<meta property="og:site_name" content="Sagar Thacker" />
+<meta property="og:image" content="https://sagarthacker.com/images/some_folder/your_image.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-11T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://sagarthacker.com/text%20preprocessing/natural%20language%20processing/2021/04/11/Text-Preprocessing.html","@type":"BlogPosting","headline":"Text Preprocessing","dateModified":"2021-04-11T00:00:00-05:00","datePublished":"2021-04-11T00:00:00-05:00","image":"https://sagarthacker.com/images/some_folder/your_image.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://sagarthacker.com/text%20preprocessing/natural%20language%20processing/2021/04/11/Text-Preprocessing.html"},"description":"Vairous preprocessing steps required to clean and prepare your data in NLP","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sagarthacker.com/feed.xml" title="Sagar Thacker" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-17YZDMEKH1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-17YZDMEKH1');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Sagar Thacker</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Text Preprocessing</h1><p class="page-description">Vairous preprocessing steps required to clean and prepare your data in NLP</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-04-11T00:00:00-05:00" itemprop="datePublished">
+        Apr 11, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      25 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#Text Preprocessing">Text Preprocessing</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#Natural Language Processing">Natural Language Processing</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/sagar118/blog/tree/master/_notebooks/2021-04-11-Text-Preprocessing.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/sagar118/blog/blob/master/_notebooks/2021-04-11-Text-Preprocessing.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Lower-Casing">Lower Casing </a></li>
+<li class="toc-entry toc-h2"><a href="#Remove">Remove </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#URL's">URL&#39;s </a></li>
+<li class="toc-entry toc-h3"><a href="#E-mail">E-mail </a></li>
+<li class="toc-entry toc-h3"><a href="#Date">Date </a></li>
+<li class="toc-entry toc-h3"><a href="#HTML-Tags">HTML Tags </a></li>
+<li class="toc-entry toc-h3"><a href="#Emojis">Emojis </a></li>
+<li class="toc-entry toc-h3"><a href="#Emoticons">Emoticons </a></li>
+<li class="toc-entry toc-h3"><a href="#Hashtags-and-Mentions">Hashtags and Mentions </a></li>
+<li class="toc-entry toc-h3"><a href="#Punctuations">Punctuations </a></li>
+<li class="toc-entry toc-h3"><a href="#Stopwords">Stopwords </a></li>
+<li class="toc-entry toc-h3"><a href="#Numbers">Numbers </a></li>
+<li class="toc-entry toc-h3"><a href="#Extra-whitespaces">Extra whitespaces </a></li>
+<li class="toc-entry toc-h3"><a href="#Frequent-words">Frequent words </a></li>
+<li class="toc-entry toc-h3"><a href="#Rare-words">Rare words </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Conversion-of-Emoji-to-Words">Conversion of Emoji to Words </a></li>
+<li class="toc-entry toc-h2"><a href="#Conversion-of-Emoticons-to-Words">Conversion of Emoticons to Words </a></li>
+<li class="toc-entry toc-h2"><a href="#Converting-Numbers-to-Words">Converting Numbers to Words </a></li>
+<li class="toc-entry toc-h2"><a href="#Chat-words-Conversion">Chat words Conversion </a></li>
+<li class="toc-entry toc-h2"><a href="#Expanding-Contractions">Expanding Contractions </a></li>
+<li class="toc-entry toc-h2"><a href="#Stemming">Stemming </a></li>
+<li class="toc-entry toc-h2"><a href="#Lemmatization">Lemmatization </a></li>
+<li class="toc-entry toc-h2"><a href="#Spelling-Correction">Spelling Correction </a></li>
+<li class="toc-entry toc-h2"><a href="#Convert-accented-characters-to-ASCII-characters">Convert accented characters to ASCII characters </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-04-11-Text-Preprocessing.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In any machine learning task, cleaning and pre-processing of the data is a very important step. The better we can represent our data, the better the model training and prediction can be expected.</p>
+<p>Specially in the domain of Natural Language Processing (NLP) the data is unstructured. It become crucial to clean and properly format it based on the task at hand. There are various pre-processing steps that can be performed but not necessary to perform all. These steps should be applied based on the problem statement.</p>
+<p>Example: Sentiment analysis on twitter data can required to remove hashtags, emoticons, etc. but this may not be the case if we are doing the same analysis on customer feedback data.</p>
+<p>Here we are using the twitter_sample dataset from the nltk library.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and load the data</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">demoji</span>
+<span class="kn">import</span> <span class="nn">contractions</span>
+<span class="kn">import</span> <span class="nn">unidecode</span>
+<span class="kn">from</span> <span class="nn">num2words</span> <span class="kn">import</span> <span class="n">num2words</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">twitter_samples</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
+<span class="kn">from</span> <span class="nn">nltk.stem.porter</span> <span class="kn">import</span> <span class="n">PorterStemmer</span>
+<span class="kn">from</span> <span class="nn">nltk.stem.snowball</span> <span class="kn">import</span> <span class="n">SnowballStemmer</span>
+<span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">WordNetLemmatizer</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">spellchecker</span> <span class="kn">import</span> <span class="n">SpellChecker</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_columns</span><span class="o">=</span><span class="kc">None</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_rows</span><span class="o">=</span><span class="kc">None</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span><span class="o">=</span><span class="kc">None</span>
+
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'twitter_samples'</span><span class="p">)</span> <span class="c1"># Download the dataset</span>
+
+<span class="c1"># We are going to use the Negative and Positive Tweets file which each contains 5000 tweets.</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">twitter_samples</span><span class="o">.</span><span class="n">fileids</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">' - </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> - negative_tweets.json
+ - positive_tweets.json
+ - tweets.20150430-223406.json
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[nltk_data] Downloading package twitter_samples to
+[nltk_data]     C:\Users\sagar\AppData\Roaming\nltk_data...
+[nltk_data]   Package twitter_samples is already up-to-date!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load the negative tweets file and assign label as 0 for negative</span>
+<span class="n">negative_tweets</span> <span class="o">=</span> <span class="n">twitter_samples</span><span class="o">.</span><span class="n">strings</span><span class="p">(</span><span class="s2">"negative_tweets.json"</span><span class="p">)</span>
+<span class="n">df_neg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">negative_tweets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'text'</span><span class="p">])</span>
+<span class="n">df_neg</span><span class="p">[</span><span class="s1">'label'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Load the positive tweets file and assign label as 1 for positive</span>
+<span class="n">positive_tweets</span> <span class="o">=</span> <span class="n">twitter_samples</span><span class="o">.</span><span class="n">strings</span><span class="p">(</span><span class="s2">"positive_tweets.json"</span><span class="p">)</span>
+<span class="n">df_pos</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">positive_tweets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'text'</span><span class="p">])</span>
+<span class="n">df_pos</span><span class="p">[</span><span class="s1">'label'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_pos</span><span class="p">,</span> <span class="n">df_neg</span><span class="p">])</span> <span class="c1"># Concatenate both the files</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Shuffle the data to mix negative and positive tweets</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Shape of the whole data is: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> rows and </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> columns'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Shape of the whole data is: 10000 rows and 2 columns
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Username Changed! :D</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>@kimtaaeyeonss unnieeee!!!:)</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>@amyewest Thanks! I hope you've got a good book to keep you company. :-)</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>:) where are you situated? @Hijay09</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>@egaroo You're welcome, I'm glad you liked it :)</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>Always make it a practice to first skim the dataset before performing any text pre-processing steps. It is important before text data can be very noisy eg. dates are written in different formats, present of accented characters, etc. These are stuff we can easily miss if we don’t go through the dataset properly.
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Lower-Casing">
+<a class="anchor" href="#Lower-Casing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lower Casing<a class="anchor-link" href="#Lower-Casing"> </a>
+</h2>
+<p>Lowercasing is a common text preprocessing technique. It helps to transform all the text in same case. <br>
+Examples 'The', 'the', 'ThE' -&gt; 'the'</p>
+<p>This is also useful to find all the duplicates since words in different cases are treated as separate words and becomes difficult for us to remove redundant words in all different case combination.</p>
+<p>This may not be helpful when we do tasks like Part of Speech tagging (where proper casing gives some information about Nouns and so on) and Sentiment Analysis (where upper casing refers to anger and so on)</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>username changed! :d</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>@kimtaaeyeonss unnieeee!!!:)</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Remove">
+<a class="anchor" href="#Remove" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remove<a class="anchor-link" href="#Remove"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="URL's">
+<a class="anchor" href="#URL's" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL's<a class="anchor-link" href="#URL's"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>URL stands for Uniform Resource Locator. If present in a text, it represents the location of another website.</p>
+<p>If we are performing any websites backlink analysis, in that case URL's are useful to keep. Otherwise, they don't provide any information. So we can remove them from our text.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s1">'https?://\S+|www\.\S+'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>username changed! :d</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>@kimtaaeyeonss unnieeee!!!:)</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>@amyewest thanks! i hope you've got a good book to keep you company. :-)</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>:) where are you situated? @hijay09</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>@egaroo you're welcome, i'm glad you liked it :)</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="E-mail">
+<a class="anchor" href="#E-mail" aria-hidden="true"><span class="octicon octicon-link"></span></a>E-mail<a class="anchor-link" href="#E-mail"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>E-mail id's are common in customer feedback data and they do not provide any useful information. So we remove them from the text.</p>
+<p>Twitter data that we are using does not contain any email id's. Hence, please find the code snipper with an dummy example to remove e-mail id's.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s1">'I have being trying to contact xyz via email to xyz@abc.co.in but there is no response.'</span>
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\S+@\S+'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'I have being trying to contact xyz via email to  but there is no response.'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Date">
+<a class="anchor" href="#Date" aria-hidden="true"><span class="octicon octicon-link"></span></a>Date<a class="anchor-link" href="#Date"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Dates can be represented in various formats and can be difficult at times to remove them. They are unlikely to contain any useful information for predicting the labels.</p>
+<p>Below I have used dummy text to showcase the following task.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"Today is 22/12/2020 and after two days on 24-12-2020 our vacation starts until 25th.09.2021"</span>
+
+<span class="c1"># 1. Remove date formats like: dd/mm/yy(yy), dd-mm-yy(yy), dd(st|nd|rd).mm/yy(yy)</span>
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\d{1,2}(st|nd|rd|th)?[-./]\d{1,2}[-./]\d{2,4}'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Today is  and after two days on  our vacation starts until '</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"Today is 11th of January, 2021 when I am writing this post. I hope to post this by February 15th or max to max by 20 may 21 or 20th-December-21"</span>
+
+<span class="c1"># 2. Remove date formats like: 20 apr 21, April 15th, 11th of April, 2021</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\d{1,2})?(st|nd|rd|th)?[-./,]?\s?(of)?\s?([J|j]an(uary)?|[F|f]eb(ruary)?|[Mm]ar(ch)?|[Aa]pr(il)?|[Mm]ay|[Jj]un(e)?|[Jj]ul(y)?|[Aa]ug(ust)?|[Ss]ep(tember)?|[Oo]ct(ober)?|[Nn]ov(ember)?|[Dd]ec(ember)?)\s?(\d{1,2})?(st|nd|rd|th)?\s?[-./,]?\s?(\d{2,4})?'</span><span class="p">)</span>
+<span class="n">pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">''</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Today is  when I am writing this post. I hope to post this byor max to max by or '</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are various formats in which dates are represented and the above regex can be customized in many ways. Above, "byor" got combined cause we are trying multiple format in single regex pattern. You can customize the above expression accordingly to your need.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="HTML-Tags">
+<a class="anchor" href="#HTML-Tags" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Tags<a class="anchor-link" href="#HTML-Tags"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we are extracting data from various websites, it is possible that the data also contains HTML tags. These tags does not provide any information and should be removed. These tags can be removed using regex or by using BeautifulSoup library.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">&lt;title&gt;Below is a dummy html code.&lt;/title&gt;</span>
+<span class="s2">&lt;body&gt;</span>
+<span class="s2">    &lt;p&gt;All the html opening and closing brackets should be remove.&lt;/p&gt;</span>
+<span class="s2">    &lt;a href="https://www.abc.com"&gt;Company Site&lt;/a&gt;</span>
+<span class="s2">&lt;/body&gt;</span>
+<span class="s2">"""</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">'&lt;.*?&gt;'</span><span class="p">)</span>
+<span class="n">pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'\nBelow is a dummy html code.\n\n    All the html opening and closing brackets should be remove.\n    Company Site\n\n'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">remove_html</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">clean_text</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">clean_text</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">remove_html</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'\nBelow is a dummy html code.\n\nAll the html opening and closing brackets should be remove.\nCompany Site\n\n'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Emojis">
+<a class="anchor" href="#Emojis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Emojis<a class="anchor-link" href="#Emojis"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As more and more people have started using social media emoji's play a very crucial role. Emoji's are used to express emotions that are universally understood.</p>
+<p>In some analysis such as sentiment analysis emoji's can be useful. We can convert them to words or create some new features based on them. For some analysis we need to remove them. Find the below code snippet used to remove the emoji's.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Reference: https://gist.github.com/slowkow/7a7f61f495e3dbb7e3d767f97bd7304b</span>
+
+<span class="k">def</span> <span class="nf">remove_emoji</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">emoji_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">"["</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U0001F600</span><span class="s2">-</span><span class="se">\U0001F64F</span><span class="s2">"</span>  <span class="c1"># emoticons</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U0001F300</span><span class="s2">-</span><span class="se">\U0001F5FF</span><span class="s2">"</span>  <span class="c1"># symbols &amp; pictographs</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U0001F680</span><span class="s2">-</span><span class="se">\U0001F6FF</span><span class="s2">"</span>  <span class="c1"># transport &amp; map symbols</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U0001F1E0</span><span class="s2">-</span><span class="se">\U0001F1FF</span><span class="s2">"</span>  <span class="c1"># flags (iOS)</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U00002500</span><span class="s2">-</span><span class="se">\U00002BEF</span><span class="s2">"</span>  <span class="c1"># chinese char</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U00002702</span><span class="s2">-</span><span class="se">\U000027B0</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U00002702</span><span class="s2">-</span><span class="se">\U000027B0</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U000024C2</span><span class="s2">-</span><span class="se">\U0001F251</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U0001f926</span><span class="s2">-</span><span class="se">\U0001f937</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\U00010000</span><span class="s2">-</span><span class="se">\U0010ffff</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\u2640</span><span class="s2">-</span><span class="se">\u2642</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\u2600</span><span class="s2">-</span><span class="se">\u2B55</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\u200d</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\u23cf</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\u23e9</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\u231a</span><span class="s2">"</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\ufe0f</span><span class="s2">"</span>  <span class="c1"># dingbats</span>
+                               <span class="sa">u</span><span class="s2">"</span><span class="se">\u3030</span><span class="s2">"</span>
+                               <span class="s2">"]+"</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">emoji_pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">''</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"game is on 🔥🔥. Hilarious😂"</span>
+<span class="n">remove_emoji</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'game is on . Hilarious'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">remove_emoji</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Emoticons">
+<a class="anchor" href="#Emoticons" aria-hidden="true"><span class="octicon octicon-link"></span></a>Emoticons<a class="anchor-link" href="#Emoticons"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Emoji's and Emoticons are different. Yes!!<br>
+Emoticons are used to express facial expressions using keyboard characters such as letters, numbers, and pucntuation marks. Where emjoi's are small images.</p>
+<p>Thanks to <a href="https://github.com/NeelShah18/emot/blob/master/emot/emo_unicode.py">Neel Shah</a> for curating a dictionary of emoticons and their description. We shall use this dictionary and remove the emoticons from our text.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">EMOTICONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">u</span><span class="s2">":‑\)"</span><span class="p">:</span><span class="s2">"Happy face or smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":\)"</span><span class="p">:</span><span class="s2">"Happy face or smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-\]"</span><span class="p">:</span><span class="s2">"Happy face or smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":\]"</span><span class="p">:</span><span class="s2">"Happy face or smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-3"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":3"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-&gt;"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":&gt;"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"8-\)"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":o\)"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-\}"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":\}"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-\)"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":c\)"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":\^\)"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"=\]"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"=\)"</span><span class="p">:</span><span class="s2">"Happy face smiley"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑D"</span><span class="p">:</span><span class="s2">"Laughing, big grin or laugh with glasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":D"</span><span class="p">:</span><span class="s2">"Laughing, big grin or laugh with glasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"8‑D"</span><span class="p">:</span><span class="s2">"Laughing, big grin or laugh with glasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"8D"</span><span class="p">:</span><span class="s2">"Laughing, big grin or laugh with glasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"X‑D"</span><span class="p">:</span><span class="s2">"Laughing, big grin or laugh with glasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"XD"</span><span class="p">:</span><span class="s2">"Laughing, big grin or laugh with glasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"=D"</span><span class="p">:</span><span class="s2">"Laughing, big grin or laugh with glasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"=3"</span><span class="p">:</span><span class="s2">"Laughing, big grin or laugh with glasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"B\^D"</span><span class="p">:</span><span class="s2">"Laughing, big grin or laugh with glasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-\)\)"</span><span class="p">:</span><span class="s2">"Very happy"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑\("</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-\("</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":\("</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑c"</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":c"</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑&lt;"</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":&lt;"</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑\["</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":\["</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-\|\|"</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;:\["</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":\{"</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":@"</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;:\("</span><span class="p">:</span><span class="s2">"Frown, sad, andry or pouting"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":'‑\("</span><span class="p">:</span><span class="s2">"Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":'\("</span><span class="p">:</span><span class="s2">"Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":'‑\)"</span><span class="p">:</span><span class="s2">"Tears of happiness"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":'\)"</span><span class="p">:</span><span class="s2">"Tears of happiness"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"D‑':"</span><span class="p">:</span><span class="s2">"Horror"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"D:&lt;"</span><span class="p">:</span><span class="s2">"Disgust"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"D:"</span><span class="p">:</span><span class="s2">"Sadness"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"D8"</span><span class="p">:</span><span class="s2">"Great dismay"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"D;"</span><span class="p">:</span><span class="s2">"Great dismay"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"D="</span><span class="p">:</span><span class="s2">"Great dismay"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"DX"</span><span class="p">:</span><span class="s2">"Great dismay"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑O"</span><span class="p">:</span><span class="s2">"Surprise"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":O"</span><span class="p">:</span><span class="s2">"Surprise"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑o"</span><span class="p">:</span><span class="s2">"Surprise"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":o"</span><span class="p">:</span><span class="s2">"Surprise"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-0"</span><span class="p">:</span><span class="s2">"Shock"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"8‑0"</span><span class="p">:</span><span class="s2">"Yawn"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;:O"</span><span class="p">:</span><span class="s2">"Yawn"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-\*"</span><span class="p">:</span><span class="s2">"Kiss"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":\*"</span><span class="p">:</span><span class="s2">"Kiss"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":X"</span><span class="p">:</span><span class="s2">"Kiss"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";‑\)"</span><span class="p">:</span><span class="s2">"Wink or smirk"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";\)"</span><span class="p">:</span><span class="s2">"Wink or smirk"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\*-\)"</span><span class="p">:</span><span class="s2">"Wink or smirk"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\*\)"</span><span class="p">:</span><span class="s2">"Wink or smirk"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";‑\]"</span><span class="p">:</span><span class="s2">"Wink or smirk"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";\]"</span><span class="p">:</span><span class="s2">"Wink or smirk"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";\^\)"</span><span class="p">:</span><span class="s2">"Wink or smirk"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑,"</span><span class="p">:</span><span class="s2">"Wink or smirk"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";D"</span><span class="p">:</span><span class="s2">"Wink or smirk"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑P"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":P"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"X‑P"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"XP"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑Þ"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":Þ"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":b"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"d:"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"=p"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;:P"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑/"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":/"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-[.]"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;:[(</span><span class="se">\\</span><span class="s2">\)]"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;:/"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":[(</span><span class="se">\\</span><span class="s2">\)]"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"=/"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"=[(</span><span class="se">\\</span><span class="s2">\)]"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":L"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"=L"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":S"</span><span class="p">:</span><span class="s2">"Skeptical, annoyed, undecided, uneasy or hesitant"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑\|"</span><span class="p">:</span><span class="s2">"Straight face"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":\|"</span><span class="p">:</span><span class="s2">"Straight face"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":$"</span><span class="p">:</span><span class="s2">"Embarrassed or blushing"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑x"</span><span class="p">:</span><span class="s2">"Sealed lips or wearing braces or tongue-tied"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":x"</span><span class="p">:</span><span class="s2">"Sealed lips or wearing braces or tongue-tied"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑#"</span><span class="p">:</span><span class="s2">"Sealed lips or wearing braces or tongue-tied"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":#"</span><span class="p">:</span><span class="s2">"Sealed lips or wearing braces or tongue-tied"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑&amp;"</span><span class="p">:</span><span class="s2">"Sealed lips or wearing braces or tongue-tied"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":&amp;"</span><span class="p">:</span><span class="s2">"Sealed lips or wearing braces or tongue-tied"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"O:‑\)"</span><span class="p">:</span><span class="s2">"Angel, saint or innocent"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"O:\)"</span><span class="p">:</span><span class="s2">"Angel, saint or innocent"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"0:‑3"</span><span class="p">:</span><span class="s2">"Angel, saint or innocent"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"0:3"</span><span class="p">:</span><span class="s2">"Angel, saint or innocent"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"0:‑\)"</span><span class="p">:</span><span class="s2">"Angel, saint or innocent"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"0:\)"</span><span class="p">:</span><span class="s2">"Angel, saint or innocent"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑b"</span><span class="p">:</span><span class="s2">"Tongue sticking out, cheeky, playful or blowing a raspberry"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"0;\^\)"</span><span class="p">:</span><span class="s2">"Angel, saint or innocent"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;:‑\)"</span><span class="p">:</span><span class="s2">"Evil or devilish"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;:\)"</span><span class="p">:</span><span class="s2">"Evil or devilish"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\}:‑\)"</span><span class="p">:</span><span class="s2">"Evil or devilish"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\}:\)"</span><span class="p">:</span><span class="s2">"Evil or devilish"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"3:‑\)"</span><span class="p">:</span><span class="s2">"Evil or devilish"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"3:\)"</span><span class="p">:</span><span class="s2">"Evil or devilish"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;;\)"</span><span class="p">:</span><span class="s2">"Evil or devilish"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\|;‑\)"</span><span class="p">:</span><span class="s2">"Cool"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\|‑O"</span><span class="p">:</span><span class="s2">"Bored"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":‑J"</span><span class="p">:</span><span class="s2">"Tongue-in-cheek"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"#‑\)"</span><span class="p">:</span><span class="s2">"Party all night"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"%‑\)"</span><span class="p">:</span><span class="s2">"Drunk or confused"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"%\)"</span><span class="p">:</span><span class="s2">"Drunk or confused"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":-###.."</span><span class="p">:</span><span class="s2">"Being sick"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":###.."</span><span class="p">:</span><span class="s2">"Being sick"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&lt;:‑\|"</span><span class="p">:</span><span class="s2">"Dump"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(&gt;_&lt;\)"</span><span class="p">:</span><span class="s2">"Troubled"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(&gt;_&lt;\)&gt;"</span><span class="p">:</span><span class="s2">"Troubled"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(';'\)"</span><span class="p">:</span><span class="s2">"Baby"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^\^&gt;``"</span><span class="p">:</span><span class="s2">"Nervous or Embarrassed or Troubled or Shy or Sweat drop"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^_\^;\)"</span><span class="p">:</span><span class="s2">"Nervous or Embarrassed or Troubled or Shy or Sweat drop"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(-_-;\)"</span><span class="p">:</span><span class="s2">"Nervous or Embarrassed or Troubled or Shy or Sweat drop"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(~_~;\) \(・\.・;\)"</span><span class="p">:</span><span class="s2">"Nervous or Embarrassed or Troubled or Shy or Sweat drop"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(-_-\)zzz"</span><span class="p">:</span><span class="s2">"Sleeping"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^_-\)"</span><span class="p">:</span><span class="s2">"Wink"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\(\+_\+\)\)"</span><span class="p">:</span><span class="s2">"Confused"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\+o\+\)"</span><span class="p">:</span><span class="s2">"Confused"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(o\|o\)"</span><span class="p">:</span><span class="s2">"Ultraman"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\^_\^"</span><span class="p">:</span><span class="s2">"Joyful"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^_\^\)/"</span><span class="p">:</span><span class="s2">"Joyful"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^O\^\)／"</span><span class="p">:</span><span class="s2">"Joyful"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^o\^\)／"</span><span class="p">:</span><span class="s2">"Joyful"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(__\)"</span><span class="p">:</span><span class="s2">"Kowtow as a sign of respect, or dogeza for apology"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"_\(\._\.\)_"</span><span class="p">:</span><span class="s2">"Kowtow as a sign of respect, or dogeza for apology"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&lt;\(_ _\)&gt;"</span><span class="p">:</span><span class="s2">"Kowtow as a sign of respect, or dogeza for apology"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&lt;m\(__\)m&gt;"</span><span class="p">:</span><span class="s2">"Kowtow as a sign of respect, or dogeza for apology"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"m\(__\)m"</span><span class="p">:</span><span class="s2">"Kowtow as a sign of respect, or dogeza for apology"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"m\(_ _\)m"</span><span class="p">:</span><span class="s2">"Kowtow as a sign of respect, or dogeza for apology"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\('_'\)"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(/_;\)"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(T_T\) \(;_;\)"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(;_;"</span><span class="p">:</span><span class="s2">"Sad of Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(;_:\)"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(;O;\)"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(:_;\)"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(ToT\)"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";_;"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";-;"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";n;"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">";;"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"Q\.Q"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"T\.T"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"QQ"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"Q_Q"</span><span class="p">:</span><span class="s2">"Sad or Crying"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(-\.-\)"</span><span class="p">:</span><span class="s2">"Shame"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(-_-\)"</span><span class="p">:</span><span class="s2">"Shame"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(一一\)"</span><span class="p">:</span><span class="s2">"Shame"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(；一_一\)"</span><span class="p">:</span><span class="s2">"Shame"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(=_=\)"</span><span class="p">:</span><span class="s2">"Tired"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(=\^\·\^=\)"</span><span class="p">:</span><span class="s2">"cat"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(=\^\·\·\^=\)"</span><span class="p">:</span><span class="s2">"cat"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"=_\^=	"</span><span class="p">:</span><span class="s2">"cat"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\.\.\)"</span><span class="p">:</span><span class="s2">"Looking down"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\._\.\)"</span><span class="p">:</span><span class="s2">"Looking down"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\^m\^"</span><span class="p">:</span><span class="s2">"Giggling with hand covering mouth"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\・\・?"</span><span class="p">:</span><span class="s2">"Confusion"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(?_?\)"</span><span class="p">:</span><span class="s2">"Confusion"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&gt;\^_\^&lt;"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"&lt;\^!\^&gt;"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\^/\^"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\（\*\^_\^\*）"</span> <span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^&lt;\^\) \(\^\.\^\)"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(^\^\)"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^\.\^\)"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^_\^\.\)"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^_\^\)"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^\^\)"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^J\^\)"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\*\^\.\^\*\)"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^—\^\）"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(#\^\.\^#\)"</span><span class="p">:</span><span class="s2">"Normal Laugh"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\（\^—\^\）"</span><span class="p">:</span><span class="s2">"Waving"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(;_;\)/~~~"</span><span class="p">:</span><span class="s2">"Waving"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^\.\^\)/~~~"</span><span class="p">:</span><span class="s2">"Waving"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(-_-\)/~~~ \($\·\·\)/~~~"</span><span class="p">:</span><span class="s2">"Waving"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(T_T\)/~~~"</span><span class="p">:</span><span class="s2">"Waving"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(ToT\)/~~~"</span><span class="p">:</span><span class="s2">"Waving"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\*\^0\^\*\)"</span><span class="p">:</span><span class="s2">"Excited"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\*_\*\)"</span><span class="p">:</span><span class="s2">"Amazed"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\*_\*;"</span><span class="p">:</span><span class="s2">"Amazed"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\+_\+\) \(@_@\)"</span><span class="p">:</span><span class="s2">"Amazed"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\*\^\^\)v"</span><span class="p">:</span><span class="s2">"Laughing,Cheerful"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^_\^\)v"</span><span class="p">:</span><span class="s2">"Laughing,Cheerful"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\(d[-_-]b\)\)"</span><span class="p">:</span><span class="s2">"Headphones,Listening to music"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">'\(-"-\)'</span><span class="p">:</span><span class="s2">"Worried"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(ーー;\)"</span><span class="p">:</span><span class="s2">"Worried"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^0_0\^\)"</span><span class="p">:</span><span class="s2">"Eyeglasses"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\＾ｖ\＾\)"</span><span class="p">:</span><span class="s2">"Happy"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\＾ｕ\＾\)"</span><span class="p">:</span><span class="s2">"Happy"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^\)o\(\^\)"</span><span class="p">:</span><span class="s2">"Happy"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^O\^\)"</span><span class="p">:</span><span class="s2">"Happy"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\^o\^\)"</span><span class="p">:</span><span class="s2">"Happy"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\)\^o\^\("</span><span class="p">:</span><span class="s2">"Happy"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">":O o_O"</span><span class="p">:</span><span class="s2">"Surprised"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"o_0"</span><span class="p">:</span><span class="s2">"Surprised"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"o\.O"</span><span class="p">:</span><span class="s2">"Surpised"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(o\.o\)"</span><span class="p">:</span><span class="s2">"Surprised"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"oO"</span><span class="p">:</span><span class="s2">"Surprised"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(\*￣m￣\)"</span><span class="p">:</span><span class="s2">"Dissatisfied"</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">"\(‘A`\)"</span><span class="p">:</span><span class="s2">"Snubbed or Deflated"</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">remove_emoticons</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">emoticons_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">u</span><span class="s1">'('</span> <span class="o">+</span> <span class="sa">u</span><span class="s1">'|'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">emo</span> <span class="k">for</span> <span class="n">emo</span> <span class="ow">in</span> <span class="n">EMOTICONS</span><span class="p">)</span> <span class="o">+</span> <span class="sa">u</span><span class="s1">')'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">emoticons_pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">''</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">remove_emoticons</span><span class="p">(</span><span class="s2">"Hello :-&gt;"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Hello '</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">remove_emoticons</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Hashtags-and-Mentions">
+<a class="anchor" href="#Hashtags-and-Mentions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hashtags and Mentions<a class="anchor-link" href="#Hashtags-and-Mentions"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We are habituated to use hashtags and mentions in our tweet either to indicate the context or bring attention to an individual. Hashtags can be used to extract features, to see what's trending and in various other applications.</p>
+<p>Since, we don't require them we'll remove them.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">remove_tags_mentions</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(@\S+|#\S+)'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"live @flippinginja on #younow - jonah and jareddddd"</span>
+<span class="n">remove_tags_mentions</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'live  on  - jonah and jareddddd'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">remove_tags_mentions</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Punctuations">
+<a class="anchor" href="#Punctuations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Punctuations<a class="anchor-link" href="#Punctuations"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Punctuations are character other than alphaters and digits. These include [!"#$%&amp;\'()*+,-./:;&lt;=&gt;?@\^_`{|}~]</p>
+<p>It is better remove or convert emoticons before removing the punctuations, since if we do the other we around we might loose the emoticons from the text. Another example, if the text contains $10.50 then we'll remove the .(dot) and the value will loose it's meaning.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">PUNCTUATIONS</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span>
+
+<span class="k">def</span> <span class="nf">remove_punctuation</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">PUNCTUATIONS</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">remove_punctuation</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>username changed d</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>unnieeee</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>thanks i hope youve got a good book to keep you company</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>where are you situated</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>youre welcome im glad you liked it</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Stopwords">
+<a class="anchor" href="#Stopwords" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stopwords<a class="anchor-link" href="#Stopwords"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Stopwords are commonly occuring words in any language. Such as, in english these words are 'the', 'a', 'an', &amp; many more. They are in most cases not useful and should be removed.</p>
+<p>There are certain tasks in which these words are useful such as Part-of-Speech(POS) tagging, language translation. Stopwords are compiled for many languages, for english language we can use the list from the nltk package.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">STOPWORDS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">'english'</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">remove_stopwords</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">STOPWORDS</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">remove_stopwords</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>username changed</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>unnieeee</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>thanks hope youve got good book keep company</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>situated</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>youre welcome im glad liked</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Numbers">
+<a class="anchor" href="#Numbers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numbers<a class="anchor-link" href="#Numbers"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We may remove numbers if they are not useful in our analysis. But analysis in the financial domain, numbers are very useful.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\d+'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Extra-whitespaces">
+<a class="anchor" href="#Extra-whitespaces" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extra whitespaces<a class="anchor-link" href="#Extra-whitespaces"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After usually after preprocessing the text there might be extra whitespaces that might be created after transforming, removing various characters. Also, there is a need to remove all the new line, tab characters as well from our text.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">remove_whitespaces</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"  Whitespaces in the beginning are removed  </span><span class="se">\t</span><span class="s2"> as well </span><span class="se">\n</span><span class="s2">  as in between  the text   "</span>
+
+<span class="n">clean_text</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">clean_text</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Whitespaces in the beginning are removed as well as in between the text'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">remove_whitespaces</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Frequent-words">
+<a class="anchor" href="#Frequent-words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frequent words<a class="anchor-link" href="#Frequent-words"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Previously we have removed stopwords which are common in any language. If we are working in any domain, we can also remove the common words used in that domain which don't provide us with much information.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">freq_words</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">FrequentWords</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">counter</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">for</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">word_count</span><span class="p">)</span> <span class="ow">in</span> <span class="n">counter</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">FrequentWords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">FrequentWords</span>
+
+<span class="k">def</span> <span class="nf">remove_fw</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">FrequentWords</span><span class="p">):</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">without_fw</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FrequentWords</span><span class="p">:</span>
+            <span class="n">without_fw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+    <span class="n">without_fw</span> <span class="o">=</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">without_fw</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">without_fw</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">Natural Language Processing is the technology used to aid computers to understand the human’s natural language. It’s not an easy task teaching machines to understand how we communicate. Leand Romaf, an experienced software engineer who is passionate at teaching people how artificial intelligence systems work, says that “in recent years, there have been significant breakthroughs in empowering computers to understand language just as we do.” This article will give a simple introduction to Natural Language Processing and how it can be achieved. Natural Language Processing, usually shortened as NLP, is a branch of artificial intelligence that deals with the interaction between computers and humans using the natural language. The ultimate objective of NLP is to read, decipher, understand, and make sense of the human languages in a manner that is valuable. Most NLP techniques rely on machine learning to derive meaning from human languages.</span>
+<span class="s2">"""</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">FrequentWords</span> <span class="o">=</span> <span class="n">freq_words</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">FrequentWords</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[',', 'to', '.', 'is', 'the', 'understand', 'Natural', 'Language', 'Processing', 'computers']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fw_result</span> <span class="o">=</span> <span class="n">remove_fw</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">FrequentWords</span><span class="p">)</span>
+<span class="n">fw_result</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'technology used aid human ’ s natural language It ’ s not an easy task teaching machines how we communicate Leand Romaf an experienced software engineer who passionate at teaching people how artificial intelligence systems work says that “ in recent years there have been significant breakthroughs in empowering language just as we do. ” This article will give a simple introduction and how it can be achieved usually shortened as NLP a branch of artificial intelligence that deals with interaction between and humans using natural language The ultimate objective of NLP read decipher and make sense of human languages in a manner that valuable Most NLP techniques rely on machine learning derive meaning from human languages'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Rare-words">
+<a class="anchor" href="#Rare-words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rare words<a class="anchor-link" href="#Rare-words"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Rare words are similar to frequent words. We can remove them because they are so less that they cannot add any value to the purpose.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">rare_words</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="c1"># tokenization</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">counter</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">=</span> <span class="o">+</span><span class="mi">1</span>
+
+    <span class="n">RareWords</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">number_rare_words</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="c1"># take top 10 frequent words</span>
+    <span class="n">frequentWords</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">word_count</span><span class="p">)</span> <span class="ow">in</span> <span class="n">frequentWords</span><span class="p">[:</span><span class="o">-</span><span class="n">number_rare_words</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">RareWords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">RareWords</span>
+
+<span class="k">def</span> <span class="nf">remove_rw</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">RareWords</span><span class="p">):</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">without_rw</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">RareWords</span><span class="p">:</span>
+            <span class="n">without_rw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+    <span class="n">without_rw</span> <span class="o">=</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">without_fw</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">without_rw</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">Natural Language Processing is the technology used to aid computers to understand the human’s natural language. It’s not an easy task teaching machines to understand how we communicate. Leand Romaf, an experienced software engineer who is passionate at teaching people how artificial intelligence systems work, says that “in recent years, there have been significant breakthroughs in empowering computers to understand language just as we do.” This article will give a simple introduction to Natural Language Processing and how it can be achieved. Natural Language Processing, usually shortened as NLP, is a branch of artificial intelligence that deals with the interaction between computers and humans using the natural language. The ultimate objective of NLP is to read, decipher, understand, and make sense of the human languages in a manner that is valuable. Most NLP techniques rely on machine learning to derive meaning from human languages.</span>
+<span class="s2">"""</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">RareWords</span> <span class="o">=</span> <span class="n">rare_words</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">RareWords</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>['from',
+ 'meaning',
+ 'derive',
+ 'learning',
+ 'machine',
+ 'on',
+ 'rely',
+ 'techniques',
+ 'Most']</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rw_result</span> <span class="o">=</span> <span class="n">remove_fw</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">RareWords</span><span class="p">)</span>
+<span class="n">rw_result</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Natural Language Processing is the technology used to aid computers to understand the human ’ s natural language . It ’ s not an easy task teaching machines to understand how we communicate . Leand Romaf , an experienced software engineer who is passionate at teaching people how artificial intelligence systems work , says that “ in recent years , there have been significant breakthroughs in empowering computers to understand language just as we do. ” This article will give a simple introduction to Natural Language Processing and how it can be achieved . Natural Language Processing , usually shortened as NLP , is a branch of artificial intelligence that deals with the interaction between computers and humans using the natural language . The ultimate objective of NLP is to read , decipher , understand , and make sense of the human languages in a manner that is valuable . NLP to human languages .'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conversion-of-Emoji-to-Words">
+<a class="anchor" href="#Conversion-of-Emoji-to-Words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conversion of Emoji to Words<a class="anchor-link" href="#Conversion-of-Emoji-to-Words"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To remove or not is done based on the purpose of the application. Example if we are building a sentiment analysis system emoji's can be useful.</p>
+<p>"The movie was 🔥"
+or
+"The movie was 💩"</p>
+<p>If we remove the emoji's the meaning of the sentence changes completely. In these cases we can convert emoji's to words.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>demoji requires an initial data download from the Unicode Consortium's <a href="http://unicode.org/Public/emoji/12.0/emoji-test.txt">emoji code repository</a>.</p>
+<p>On first use of the package, call download_codes().<br>
+This will store the Unicode hex-notated symbols at ~/.demoji/codes.json for future use.</p>
+<p>Read more about demoji on <a href="https://pypi.org/project/demoji/">pypi.org</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">demoji</span><span class="o">.</span><span class="n">download_codes</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Downloading emoji data ...
+... OK (Got response in 1.35 seconds)
+Writing emoji data to C:\Users\sagar\.demoji\codes.json ...
+... OK
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">emoji_to_words</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">demoji</span><span class="o">.</span><span class="n">replace_with_desc</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"__"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"game is on 🔥 🚣🏼"</span>
+<span class="n">emoji_to_words</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'game is on __fire__ __person rowing boat: medium-light skin tone__'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conversion-of-Emoticons-to-Words">
+<a class="anchor" href="#Conversion-of-Emoticons-to-Words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conversion of Emoticons to Words<a class="anchor-link" href="#Conversion-of-Emoticons-to-Words"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we did for emoji's, we convert emoticons to words for the same purpose.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">emoticons_to_words</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">emot</span> <span class="ow">in</span> <span class="n">EMOTICONS</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">u</span><span class="s1">'('</span><span class="o">+</span><span class="n">emot</span><span class="o">+</span><span class="s1">')'</span><span class="p">,</span> <span class="s2">"_"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">EMOTICONS</span><span class="p">[</span><span class="n">emot</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">","</span><span class="p">,</span><span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">":"</span><span class="p">,</span><span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()),</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"Hey there!! :-)"</span>
+<span class="n">emoticons_to_words</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Hey there!! Happy_face_smiley'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Converting-Numbers-to-Words">
+<a class="anchor" href="#Converting-Numbers-to-Words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Converting Numbers to Words<a class="anchor-link" href="#Converting-Numbers-to-Words"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If our analysis require us to use information based on the numbers in the text, we can convert them to words.</p>
+<p>Read more about num2words on <a href="https://github.com/savoirfairelinux/num2words">github</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">nums_to_words</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">new_text</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="n">new_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num2words</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"I ran this track 30 times"</span>
+<span class="n">nums_to_words</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'I ran this track thirty times'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Chat-words-Conversion">
+<a class="anchor" href="#Chat-words-Conversion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chat words Conversion<a class="anchor-link" href="#Chat-words-Conversion"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The more we use social media, we have become lazy to type the whole phrase or word. Due to which slang words came into existance such as "omg" which represents "Oh my god". Such slang words don't provide much information and if we need to use them we have to convert them.</p>
+<p>Thank you: <a href="https://github.com/rishabhverma17/sms_slang_translator/blob/master/slang.txt">GitHub repo</a> for the list of slang words</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chat_words</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">AFAIK=As Far As I Know</span>
+<span class="s2">AFK=Away From Keyboard</span>
+<span class="s2">ASAP=As Soon As Possible</span>
+<span class="s2">ATK=At The Keyboard</span>
+<span class="s2">ATM=At The Moment</span>
+<span class="s2">A3=Anytime, Anywhere, Anyplace</span>
+<span class="s2">BAK=Back At Keyboard</span>
+<span class="s2">BBL=Be Back Later</span>
+<span class="s2">BBS=Be Back Soon</span>
+<span class="s2">BFN=Bye For Now</span>
+<span class="s2">B4N=Bye For Now</span>
+<span class="s2">BRB=Be Right Back</span>
+<span class="s2">BRT=Be Right There</span>
+<span class="s2">BTW=By The Way</span>
+<span class="s2">B4=Before</span>
+<span class="s2">B4N=Bye For Now</span>
+<span class="s2">CU=See You</span>
+<span class="s2">CUL8R=See You Later</span>
+<span class="s2">CYA=See You</span>
+<span class="s2">FAQ=Frequently Asked Questions</span>
+<span class="s2">FC=Fingers Crossed</span>
+<span class="s2">FWIW=For What It's Worth</span>
+<span class="s2">FYI=For Your Information</span>
+<span class="s2">GAL=Get A Life</span>
+<span class="s2">GG=Good Game</span>
+<span class="s2">GN=Good Night</span>
+<span class="s2">GMTA=Great Minds Think Alike</span>
+<span class="s2">GR8=Great!</span>
+<span class="s2">G9=Genius</span>
+<span class="s2">IC=I See</span>
+<span class="s2">ICQ=I Seek you (also a chat program)</span>
+<span class="s2">ILU=ILU: I Love You</span>
+<span class="s2">IMHO=In My Honest/Humble Opinion</span>
+<span class="s2">IMO=In My Opinion</span>
+<span class="s2">IOW=In Other Words</span>
+<span class="s2">IRL=In Real Life</span>
+<span class="s2">KISS=Keep It Simple, Stupid</span>
+<span class="s2">LDR=Long Distance Relationship</span>
+<span class="s2">LMAO=Laugh My A.. Off</span>
+<span class="s2">LOL=Laughing Out Loud</span>
+<span class="s2">LTNS=Long Time No See</span>
+<span class="s2">L8R=Later</span>
+<span class="s2">MTE=My Thoughts Exactly</span>
+<span class="s2">M8=Mate</span>
+<span class="s2">NRN=No Reply Necessary</span>
+<span class="s2">OIC=Oh I See</span>
+<span class="s2">PITA=Pain In The A..</span>
+<span class="s2">PRT=Party</span>
+<span class="s2">PRW=Parents Are Watching</span>
+<span class="s2">QPSA?=Que Pasa?</span>
+<span class="s2">ROFL=Rolling On The Floor Laughing</span>
+<span class="s2">ROFLOL=Rolling On The Floor Laughing Out Loud</span>
+<span class="s2">ROTFLMAO=Rolling On The Floor Laughing My A.. Off</span>
+<span class="s2">SK8=Skate</span>
+<span class="s2">STATS=Your sex and age</span>
+<span class="s2">ASL=Age, Sex, Location</span>
+<span class="s2">THX=Thank You</span>
+<span class="s2">TTFN=Ta-Ta For Now!</span>
+<span class="s2">TTYL=Talk To You Later</span>
+<span class="s2">U=You</span>
+<span class="s2">U2=You Too</span>
+<span class="s2">U4E=Yours For Ever</span>
+<span class="s2">WB=Welcome Back</span>
+<span class="s2">WTF=What The F...</span>
+<span class="s2">WTG=Way To Go!</span>
+<span class="s2">WUF=Where Are You From?</span>
+<span class="s2">W8=Wait...</span>
+<span class="s2">7K=Sick:-D Laugher</span>
+<span class="s2">OMG=Oh my god"""</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chat_words_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">chat_words_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">cw_conversion</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">new_text</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">in</span> <span class="n">chat_words_set</span><span class="p">:</span>
+            <span class="n">new_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chat_words_dict</span><span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">upper</span><span class="p">()])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">chat_words</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">!=</span> <span class="s1">''</span><span class="p">:</span>
+        <span class="n">cw</span><span class="p">,</span> <span class="n">cw_expanded</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="n">chat_words_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">cw</span><span class="p">)</span>
+        <span class="n">chat_words_dict</span><span class="p">[</span><span class="n">cw</span><span class="p">]</span> <span class="o">=</span> <span class="n">cw_expanded</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"omg that's awesome."</span>
+<span class="n">cw_conversion</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>"Oh my god that's awesome."</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Expanding-Contractions">
+<a class="anchor" href="#Expanding-Contractions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Expanding Contractions<a class="anchor-link" href="#Expanding-Contractions"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Contractions are words or combinations of words created by dropping a few letters and replacing those letters by an apostrophe.</p>
+<p>Example:</p>
+<ul>
+<li>don't: do not</li>
+<li>we'll: we will</li>
+</ul>
+<p>Our nlp model don't understand these contractions i.e. they don't understand that "don't" and "do not" are the same thing. If our problem statement requires them then we can expand them or else leave it as it is.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">expand_contractions</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">expanded_text</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="n">expanded_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">contractions</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">expanded_text</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"I'll be there within 15 minutes."</span><span class="p">,</span> <span class="s2">"It's awesome to meet your new friends."</span><span class="p">]</span>
+<span class="n">expand_contractions</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>['I will be there within 15 minutes.',
+ 'it is awesome to meet your new friends.']</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Stemming">
+<a class="anchor" href="#Stemming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stemming<a class="anchor-link" href="#Stemming"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In stemming we reduce the word to it's base or root form by removing the suffix characters from the word. It is one of the technique to normalize text.</p>
+<p>Example:</p>
+<ul>
+<li>cars -&gt; car</li>
+<li>console -&gt; consol</li>
+<li>caring -&gt; care</li>
+</ul>
+<p>We can see that the stemmed word doesn't always match the words in our dictionary. Due to which stemming is not performed in all nlp tasks.</p>
+<p>There are various algorithms used for stemming but the most widely used is PorterStemmer. In this post we have used the PorterStemmer as well.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stemmer</span> <span class="o">=</span> <span class="n">PorterStemmer</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">stem_words</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'text_stemmed'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">stem_words</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">'text'</span><span class="p">,</span> <span class="s1">'text_stemmed'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>text_stemmed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>username changed</td>
+      <td>usernam chang</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>unnieeee</td>
+      <td>unnieee</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>thanks hope youve got good book keep company</td>
+      <td>thank hope youv got good book keep compani</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>situated</td>
+      <td>situat</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>youre welcome im glad liked</td>
+      <td>your welcom im glad like</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>PorterStemmer can be used only for english. If we are working with other than english then we can use SnowballStemmer.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">SnowballStemmer</span><span class="o">.</span><span class="n">languages</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>('arabic',
+ 'danish',
+ 'dutch',
+ 'english',
+ 'finnish',
+ 'french',
+ 'german',
+ 'hungarian',
+ 'italian',
+ 'norwegian',
+ 'porter',
+ 'portuguese',
+ 'romanian',
+ 'russian',
+ 'spanish',
+ 'swedish')</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Lemmatization">
+<a class="anchor" href="#Lemmatization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lemmatization<a class="anchor-link" href="#Lemmatization"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Lemmatization tried to perform the similar task as that of stemming i.e. trying to reduce the inflection words to it's base form. But lemmatization does it by using a different approach.</p>
+<p>Lemmatizations takes into consideration of the morphological analysis of the word. It tries to reduce to words to it's dictionary form which is known as lemma.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">text_lemmatize</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'text_lemmatized'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">text_lemmatize</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">'text'</span><span class="p">,</span> <span class="s1">'text_stemmed'</span><span class="p">,</span> <span class="s1">'text_lemmatized'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>text_stemmed</th>
+      <th>text_lemmatized</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>username changed</td>
+      <td>usernam chang</td>
+      <td>username changed</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>unnieeee</td>
+      <td>unnieee</td>
+      <td>unnieeee</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>thanks hope youve got good book keep company</td>
+      <td>thank hope youv got good book keep compani</td>
+      <td>thanks hope youve got good book keep company</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>situated</td>
+      <td>situat</td>
+      <td>situated</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>youre welcome im glad liked</td>
+      <td>your welcom im glad like</td>
+      <td>youre welcome im glad liked</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead>
+<tr>
+<th>Stemming</th>
+<th>Lemmatization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fast compared to lemmatization</td>
+<td>Slow compared to stemming</td>
+</tr>
+<tr>
+<td>Reduces the word to it's base form by removing the suffix</td>
+<td>Uses lexical knowledge to get the base form of the word</td>
+</tr>
+<tr>
+<td>Does not always provide meaning or dictionary form of the original word</td>
+<td>Resulting words are always meaningful and dictionary words</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Spelling-Correction">
+<a class="anchor" href="#Spelling-Correction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spelling Correction<a class="anchor-link" href="#Spelling-Correction"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We as human always make mistake. Normally incorrect spelling in text are know as typos.</p>
+<p>Since the NLP model doesn't know the difference between a correct and an incorrect word. For the model "thanks" and "thnks" are two different words. Therefore, spelling correction is an important step to bring the incorrect words in the correct format.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">spell</span> <span class="o">=</span> <span class="n">SpellChecker</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">correct_spelling</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">correct_text</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">misspelled_words</span> <span class="o">=</span> <span class="n">spell</span><span class="o">.</span><span class="n">unknown</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">misspelled_words</span><span class="p">:</span>
+            <span class="n">correct_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">spell</span><span class="o">.</span><span class="n">correction</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">correct_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">correct_text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"Hi, hwo are you doin? I'm good thnks for asking"</span>
+<span class="n">correct_spelling</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>"Hi, how are you doing I'm good thanks for asking"</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"hw are you doin? I'm god thnks"</span>
+<span class="n">correct_spelling</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>"he are you doing I'm god thanks"</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Convert-accented-characters-to-ASCII-characters">
+<a class="anchor" href="#Convert-accented-characters-to-ASCII-characters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Convert accented characters to ASCII characters<a class="anchor-link" href="#Convert-accented-characters-to-ASCII-characters"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Accent marks (also referred to as diacritics or diacriticals) usually appear above a character when we press the character for a long time. These need to be remove cause the model cannot distinguish between "dèèp" and "deep". It will consider them as two different words.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">accented_to_ascii</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">unidecode</span><span class="o">.</span><span class="n">unidecode</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">"This is an example text with accented characters like dèèp lèarning ánd cömputer vísíön etc."</span>
+<span class="n">accented_to_ascii</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'This is an example text with accented characters like deep learning and computer vision etc.'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I'll update this post as I learn more techniques to pre-process text.</p>
+<p>Share if you liked it, comment if you loved it. Hope to see you guys in the next one. Peace!</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="sagar118/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/text%20preprocessing/natural%20language%20processing/2021/04/11/Text-Preprocessing.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A blog on Algorithms, Data Science and Artificial Intelligence.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/sagar118" title="sagar118"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/sagar118" title="sagar118"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/sagarthacker118" title="sagarthacker118"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
