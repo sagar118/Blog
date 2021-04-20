@@ -2598,13 +2598,20 @@ Writing emoji data to C:\Users\sagar\.demoji\codes.json ...
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In stemming we reduce the word to it's base or root form by removing the suffix characters from the word. It is one of the technique to normalize text.</p>
-<p>Example:</p>
+<p>Stemming for root word "like" include:</p>
 <ul>
-<li>cars -&gt; car</li>
-<li>console -&gt; consol</li>
-<li>caring -&gt; care</li>
+<li>"likes"</li>
+<li>"liked"</li>
+<li>"likely"</li>
+<li>"liking"</li>
 </ul>
-<p>We can see that the stemmed word doesn't always match the words in our dictionary. Due to which stemming is not performed in all nlp tasks.</p>
+<p>Stemmed word doesn't always match the words in our dictionary such as:</p>
+<ul>
+<li>console -&gt; consol</li>
+<li>company -&gt; compani</li>
+<li>welcome -&gt; welcom</li>
+</ul>
+<p>Due to which stemming is not performed in all nlp tasks.</p>
 <p>There are various algorithms used for stemming but the most widely used is PorterStemmer. In this post we have used the PorterStemmer as well.</p>
 
 </div>
