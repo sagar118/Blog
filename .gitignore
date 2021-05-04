@@ -8,6 +8,7 @@ _site
 *.xml
 vendor
 _notebooks/.ipynb_checkpoints
+_notebooks/2021-04-22-Text-Representation.ipynb
 # Local Netlify folder
 .netlify
 .tweet-cache
