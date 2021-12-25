@@ -7,7 +7,7 @@ comments: true
 image: images/posts/what_is_NLP_image.jpg
 hide: false
 author: Sagar Thacker
-categories: [Machine Learning, Natural Language Processing]
+categories: [Natural Language Processing]
 ---
 
 Natural language processing is a branch of Artificial Intelligence which aims to bridge the gap between how a computer and human communicate with each other. The two major handles used for communication are speech and written i.e. text.
