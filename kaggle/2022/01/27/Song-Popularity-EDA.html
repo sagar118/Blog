@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Song Popularity EDA | Sagar Thacker</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Song Popularity EDA" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A blog on Algorithms, Data Science and Artificial Intelligence." />
+<meta property="og:description" content="A blog on Algorithms, Data Science and Artificial Intelligence." />
+<link rel="canonical" href="https://sagarthacker.com/kaggle/2022/01/27/Song-Popularity-EDA.html" />
+<meta property="og:url" content="https://sagarthacker.com/kaggle/2022/01/27/Song-Popularity-EDA.html" />
+<meta property="og:site_name" content="Sagar Thacker" />
+<meta property="og:image" content="https://sagarthacker.com/images/posts/song_prediction.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-27T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://sagarthacker.com/kaggle/2022/01/27/Song-Popularity-EDA.html","@type":"BlogPosting","headline":"Song Popularity EDA","dateModified":"2022-01-27T00:00:00-06:00","datePublished":"2022-01-27T00:00:00-06:00","image":"https://sagarthacker.com/images/posts/song_prediction.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://sagarthacker.com/kaggle/2022/01/27/Song-Popularity-EDA.html"},"description":"A blog on Algorithms, Data Science and Artificial Intelligence.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sagarthacker.com/feed.xml" title="Sagar Thacker" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-17YZDMEKH1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-17YZDMEKH1');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" /><script src="https://hypothes.is/embed.js" async></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Sagar Thacker</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Song Popularity EDA</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-01-27T00:00:00-06:00" itemprop="datePublished">
+        Jan 27, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      11 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#Kaggle">Kaggle</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/sagar118/blog/tree/master/_notebooks/2022-01-27-Song-Popularity-EDA.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/sagar118/blog/blob/master/_notebooks/2022-01-27-Song-Popularity-EDA.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#1.-Introduction">1. Introduction </a></li>
+<li class="toc-entry toc-h2"><a href="#2.-Preparation">2. Preparation </a></li>
+<li class="toc-entry toc-h2"><a href="#3.-Overview:-structure-and-data-content">3. Overview: structure and data content </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#3.1.-Look-at-the-data">3.1. Look at the data </a></li>
+<li class="toc-entry toc-h3"><a href="#3.2.-Missing-data">3.2. Missing data </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#4.-Visualization---Individual-Features">4. Visualization - Individual Features </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#4.1.-Predictor-variables">4.1. Predictor variables </a></li>
+<li class="toc-entry toc-h3"><a href="#4.2.-Target:-Song-Popularity">4.2. Target: Song Popularity </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#5.-Feature-interactions">5. Feature interactions </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#5.1.-Target-impact">5.1. Target impact </a></li>
+<li class="toc-entry toc-h3"><a href="#5.2.-Feature-Interaction">5.2. Feature Interaction </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#5.2.1.-Correlations-overview">5.2.1. Correlations overview </a></li>
+<li class="toc-entry toc-h4"><a href="#5.2.2.-Categorical-feature-interactions">5.2.2. Categorical feature interactions </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#5.3.-Feature-Target-Interaction">5.3. Feature Target Interaction </a></li>
+<li class="toc-entry toc-h3"><a href="#More-Resources:">More Resources: </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-01-27-Song-Popularity-EDA.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This Python notebook is the Python version of <a href="https://www.kaggle.com/headsortails/song-popularity-eda-live-coding-fun">Song Popularity EDA - Live Coding Fun</a> by <a href="https://www.kaggle.com/headsortails">Martin Henze</a></p>
+<p>Purpose of this notebook is to recreate the plots in python for learning purpose.</p>
+<p>The recording of the live-coding session can be found on Abhishek Thakur's YouTube channel:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=JXF-7rCcR1c">Song Popularity Prediction - EDA (Part 1)</a></li>
+<li><a href="https://www.youtube.com/watch?v=2aE6SvCVOis">Song Popularity Prediction - EDA (Part 2)</a></li>
+</ul>
+<h2 id="1.-Introduction">
+<a class="anchor" href="#1.-Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Introduction<a class="anchor-link" href="#1.-Introduction"> </a>
+</h2>
+<p>The competition is about Song Prediction based on a set of different features. The dataset contains the basic file such as <code>train.csv</code>, <code>test.csv</code> and <code>submission_sample.csv</code>. The dataset used in this competition is in tabular format. The evaluation metric used for this competition is AUC score.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Preparation">
+<a class="anchor" href="#2.-Preparation" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Preparation<a class="anchor-link" href="#2.-Preparation"> </a>
+</h2>
+<p>Initially we'll load different libraries used in our analysis. Also, load the train and test data.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">"""Load the libraries"""</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">plotnine</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">"""Load the data"""</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"/kaggle/input/song-popularity-prediction/train.csv"</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"/kaggle/input/song-popularity-prediction/test.csv"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Overview:-structure-and-data-content">
+<a class="anchor" href="#3.-Overview:-structure-and-data-content" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Overview: structure and data content<a class="anchor-link" href="#3.-Overview:-structure-and-data-content"> </a>
+</h2>
+<p>The first step we'll do is look at the raw data. This tell us about the different features in the dataset, missing values, and types of features (numeric, string, categorical, etc.).</p>
+<h3 id="3.1.-Look-at-the-data">
+<a class="anchor" href="#3.1.-Look-at-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. Look at the data<a class="anchor-link" href="#3.1.-Look-at-the-data"> </a>
+</h3>
+<p>Let's look at the basic structure of the data</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Information about Data'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We find:</p>
+<ul>
+<li>There are 40000 entries and 15 features in total.</li>
+<li>All the column data type is either int or float i.e. all the columns are numeric. This make is comparatively easier to work with compared to columns contains string type data.</li>
+<li>We can also observe there are columns that contain less than 40K Non-Null values which indicates missing values in the dataset.</li>
+</ul>
+<p>Let's now look at the top 20 rows of the data.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">"""Display top 20 rows of the train data"""</span>
+<span class="n">display</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">"First Twenty rows of Training Data"</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We find:</p>
+<ul>
+<li>There are missing values that can be seen as <code>nan</code> in the table above</li>
+<li>The <code>id</code> column seems to have values in increasing order</li>
+<li>The values in the features are in different scales</li>
+</ul>
+<p>Now, let's look at some basic statistics about our features in the data</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">"Basic statistics about Train Data"</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We find:</p>
+<ul>
+<li>Most of the features are in the range of 0 and 1</li>
+<li>There are features with only negative values (<code>loudness</code>), binary features (<code>audio_mode</code>) , and seems to be categorical (<code>key</code> and <code>time_signature</code>)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="3.2.-Missing-data">
+<a class="anchor" href="#3.2.-Missing-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. Missing data<a class="anchor-link" href="#3.2.-Missing-data"> </a>
+</h3>
+<p>Now let's take a closer look at the missing values in the dataset</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">"""Missing Values"""</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Train set has </span><span class="si">{</span><span class="n">train</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> missing values, and test set has </span><span class="si">{</span><span class="n">test</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> missing values"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Refrence (edited): https://datavizpyr.com/visualizing-missing-data-with-seaborn-heatmap-and-displot/</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">value_name</span><span class="o">=</span><span class="s2">"missing"</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">"variable"</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">"missing"</span><span class="p">,</span>
+    <span class="n">multiple</span><span class="o">=</span><span class="s2">"fill"</span><span class="p">,</span>
+    <span class="n">aspect</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Missing values shown using Bar plot"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">17</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Heatmap showing Missing Values in Train data'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">17</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_null</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">test_null</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="n">non_zero_train_values</span> <span class="o">=</span> <span class="n">train_null</span><span class="p">[</span><span class="n">train_null</span><span class="o">.</span><span class="n">values</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">non_zero_test_values</span> <span class="o">=</span> <span class="n">test_null</span><span class="p">[</span><span class="n">test_null</span><span class="o">.</span><span class="n">values</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">non_zero_test_values</span><span class="o">.</span><span class="n">index</span> <span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">non_zero_test_values</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">palette</span> <span class="o">=</span> <span class="s2">"viridis"</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">non_zero_train_values</span><span class="o">.</span><span class="n">index</span> <span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">non_zero_train_values</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">palette</span> <span class="o">=</span> <span class="s2">"viridis"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Train data"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Test data"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-Visualization---Individual-Features">
+<a class="anchor" href="#4.-Visualization---Individual-Features" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Visualization - Individual Features<a class="anchor-link" href="#4.-Visualization---Individual-Features"> </a>
+</h2>
+<p>After getting an initial idea about our features and their values, we can now dive into the visual part of the exploration. I recommend to always plot your data. Sometimes this might be challenging, e.g. because you have tons of features. In that case, you want to start at least with a subset before you run any dimensionality reduction or other tools. This step is as much about spotting issues and irregularities as it is about learning more about the shapes and distributions of your features.</p>
+<h3 id="4.1.-Predictor-variables">
+<a class="anchor" href="#4.1.-Predictor-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.1. Predictor variables<a class="anchor-link" href="#4.1.-Predictor-variables"> </a>
+</h3>
+<ul>
+<li>In the live session, we were building this plot step by step. (Well, we got most of the way there.) It really pays off to take the time and investigate each feature separately. This is one of the most instructive steps in the EDA process, where you aim to learn how messed up your features are. No dataset is perfect. We want to figure out how severe those imperfections are, and whether we can live with them or have to address them.</li>
+<li>Different kind of data types go best with different kind of visuals. My recommendation is to start out with density plots or histograms for numerical features, and with barcharts for those that are better expressed as types of categories.</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">useful_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">train</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"song_popularity"</span><span class="p">]]</span>
+<span class="n">numeric_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">useful_cols</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"key"</span><span class="p">,</span> <span class="s2">"audio_mode"</span><span class="p">,</span> <span class="s2">"time_signature"</span><span class="p">]]</span>
+
+<span class="n">n_rows</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">n_cols</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"red"</span><span class="p">,</span> <span class="s2">"darkblue"</span><span class="p">,</span> <span class="s2">"green"</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">useful_cols</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span><span class="n">n_cols</span><span class="p">,</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_cols</span><span class="p">:</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span><span class="n">n_cols</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">'instrumentalness'</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'instrumentalness (log transformed)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We find:</p>
+<ul>
+<li>Our initial impressions of the data types have largely been confirmed: audio_mode is a boolean feature, and time_signature and key are ordinal or categorical ones (or integer; although a better understanding of those musical concepts would certainly benefit from some domain knowledge.)</li>
+<li>A number of features are bounded between 0 and 1: accosticness, danceability, energy, liveliness, speechiness, and audio_valence.</li>
+<li>The feature loudness looks like it refer to the decibel scale.</li>
+<li>The distribution of instrumentalness is heavily right-skewed, and even after a log transform this feature doesn’t look very well-behaved. This might need a bit more work.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="4.2.-Target:-Song-Popularity">
+<a class="anchor" href="#4.2.-Target:-Song-Popularity" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.2. Target: Song Popularity<a class="anchor-link" href="#4.2.-Target:-Song-Popularity"> </a>
+</h3>
+<p>On to the target itself. We figured out that song_popularity is a binary feature, and thus we can express it as boolean. Here we plot a barchart.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">song_popularity</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"bool"</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Target: Song Popularity"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We find:</p>
+<ul>
+<li>There is a slight imbalance in the target distribution: a bit more than 60/40. Not super imbalanced, but something to keep in mind.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Feature-interactions">
+<a class="anchor" href="#5.-Feature-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Feature interactions<a class="anchor-link" href="#5.-Feature-interactions"> </a>
+</h2>
+<p>After learning more about each individual feature, we now want to see them interacting with one another. It’s best to perfom those steps in that order, so that you can understand and interpret the interactions in the context of the overall distributions.</p>
+<h3 id="5.1.-Target-impact">
+<a class="anchor" href="#5.1.-Target-impact" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.1. Target impact<a class="anchor-link" href="#5.1.-Target-impact"> </a>
+</h3>
+<p>We have seen all the feature distributions, now we want to investigate whether they look different based on the target value. Here’s an example for song_duration:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">n_cols</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">numeric_cols</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">train</span><span class="o">.</span><span class="n">song_popularity</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"bool"</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Observations:</p>
+<ul>
+<li>By looking at the probability distribution of different variables we find that popular songs are almost exactly the same length as unpopular ones. There is a slight difference, but it’s pretty small.</li>
+</ul>
+<p>Now we can check the categorical features.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">"key"</span><span class="p">,</span> <span class="s2">"audio_mode"</span><span class="p">,</span> <span class="s2">"time_signature"</span><span class="p">]):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">train</span><span class="o">.</span><span class="n">song_popularity</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"bool"</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.2.-Feature-Interaction">
+<a class="anchor" href="#5.2.-Feature-Interaction" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.2. Feature Interaction<a class="anchor-link" href="#5.2.-Feature-Interaction"> </a>
+</h3>
+<p>How do the predictor features interact with each other? Are there any redundancies or strong relationships? We will start out with a correlation matrix, and then look at features of interest in a bit more detail.</p>
+<h4 id="5.2.1.-Correlations-overview">
+<a class="anchor" href="#5.2.1.-Correlations-overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.2.1. Correlations overview<a class="anchor-link" href="#5.2.1.-Correlations-overview"> </a>
+</h4>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Refrence (edited): https://towardsdatascience.com/better-heatmaps-and-correlation-matrix-plots-in-python-41445d0f2bec</span>
+<span class="k">def</span> <span class="nf">heatmap</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">id_vars</span><span class="o">=</span><span class="s1">'index'</span><span class="p">)</span> <span class="c1"># Unpivot the dataframe, so we can get pair of arrays for x and y</span>
+    <span class="n">corr</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">,</span> <span class="s1">'value'</span><span class="p">]</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">corr</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">corr</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
+    <span class="n">size</span><span class="o">=</span><span class="n">corr</span><span class="p">[</span><span class="s1">'value'</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">corr</span><span class="p">[</span><span class="s1">'value'</span><span class="p">]</span>
+    
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+    <span class="n">plot_grid</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> <span class="c1"># Setup a 1x15 grid</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">plot_grid</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># Use the leftmost 14 columns of the grid for the main plot</span>
+    
+    <span class="n">n_colors</span> <span class="o">=</span> <span class="mi">256</span> <span class="c1"># Use 256 colors for the diverging color palette</span>
+    <span class="n">palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n_colors</span><span class="p">)</span> <span class="c1"># Create the palette</span>
+    <span class="n">color_min</span><span class="p">,</span> <span class="n">color_max</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="c1"># Range of values that will be mapped to the palette, i.e. min and max possible correlation</span>
+    <span class="n">size_min</span><span class="p">,</span> <span class="n">size_max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+    
+    <span class="k">def</span> <span class="nf">value_to_color</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="n">val_position</span> <span class="o">=</span> <span class="nb">float</span><span class="p">((</span><span class="n">val</span> <span class="o">-</span> <span class="n">color_min</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">color_max</span> <span class="o">-</span> <span class="n">color_min</span><span class="p">)</span> <span class="c1"># position of value in the input range, relative to the length of the input range</span>
+        <span class="n">val_position</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">val_position</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># bound the position betwen 0 and 1</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val_position</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_colors</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># target index in the color palette</span>
+        <span class="k">return</span> <span class="n">palette</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">value_to_size</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="n">val_position</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">size_min</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.99</span> <span class="o">/</span> <span class="p">(</span><span class="n">size_max</span> <span class="o">-</span> <span class="n">size_min</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span> <span class="c1"># position of value in the input range, relative to the length of the input range</span>
+        <span class="n">val_position</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">val_position</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># bound the position betwen 0 and 1</span>
+        <span class="k">return</span> <span class="n">val_position</span> <span class="o">*</span> <span class="n">size_scale</span>
+        
+    <span class="c1"># Mapping from column names to integer coordinates</span>
+    <span class="n">x_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">unique</span><span class="p">())]</span>
+    <span class="n">y_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">())]</span>
+    <span class="n">x_to_num</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x_labels</span><span class="p">)}</span> 
+    <span class="n">y_to_num</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y_labels</span><span class="p">)}</span> 
+    
+    <span class="n">size_scale</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">x_to_num</span><span class="p">),</span> <span class="c1"># Use mapping for x</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">y_to_num</span><span class="p">),</span> <span class="c1"># Use mapping for y</span>
+        <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">value_to_size</span><span class="p">),</span> <span class="c1"># Vector of square sizes, proportional to size parameter</span>
+        <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">value_to_color</span><span class="p">),</span> <span class="c1"># Vector of square color values, mapped to color palette</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">'s'</span> <span class="c1"># Use square as scatterplot marker</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Show column labels on the axes</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="n">x_to_num</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">x_labels</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">x_labels</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">'right'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="n">y_to_num</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">y_labels</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">y_labels</span><span class="p">)</span>
+    
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s1">'major'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">'minor'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="n">t</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xticks</span><span class="p">()],</span> <span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="n">t</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()],</span> <span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">max</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">x_to_num</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">max</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">y_to_num</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'#F1F1F1'</span><span class="p">)</span>
+    
+    <span class="c1"># Add color legend on the right side of the plot</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">plot_grid</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># Use the rightmost column of the plot</span>
+
+    <span class="n">col_x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span> <span class="c1"># Fixed x coordinate for the bars</span>
+    <span class="n">bar_y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">color_min</span><span class="p">,</span> <span class="n">color_max</span><span class="p">,</span> <span class="n">n_colors</span><span class="p">)</span> <span class="c1"># y coordinates for each of the n_colors bars</span>
+
+    <span class="n">bar_height</span> <span class="o">=</span> <span class="n">bar_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">bar_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">bar_y</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">palette</span><span class="p">),</span> <span class="c1"># Make bars 5 units wide</span>
+        <span class="n">left</span><span class="o">=</span><span class="n">col_x</span><span class="p">,</span> <span class="c1"># Make bars start at 0</span>
+        <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># Bars are going from 0 to 5, so lets crop the plot somewhere in the middle</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># Hide grid</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'white'</span><span class="p">)</span> <span class="c1"># Make background white</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span> <span class="c1"># Remove horizontal ticks</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">bar_y</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">bar_y</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span> <span class="c1"># Show vertical ticks for min, middle and max</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">tick_right</span><span class="p">()</span> <span class="c1"># Show vertical ticks on the right</span>
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">heatmap</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">numeric_cols</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below is a similar correlation heatmap but only using the lower triangle to show the correlation.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Refrence (edited): https://medium.com/@szabo.bibor/how-to-create-a-seaborn-correlation-heatmap-in-python-834c0686b88e</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">numeric_cols</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">numeric_cols</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">mask</span><span class="o">=</span><span class="n">matrix</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">220</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We find:</p>
+<ul>
+<li>There’s a strong anti-correlation between <code>acousticness</code> vs <code>energy</code> and <code>loudness</code>, respectively. Consequently, <code>energy</code> and <code>loudness</code> share a strong correlation.</li>
+<li>None of the features individually show a notable correlation with the target <code>song_popularity</code>.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="5.2.2.-Categorical-feature-interactions">
+<a class="anchor" href="#5.2.2.-Categorical-feature-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.2.2. Categorical feature interactions<a class="anchor-link" href="#5.2.2.-Categorical-feature-interactions"> </a>
+</h4>
+<p>Whenever we’re looking at categorical features, we can assign a visualisation dimension like colour, size, or facets to those. We will start modifying our trusted density plots to look at the distributions of energy (potentially one of the more interesting numerical features) for the different values of time_signature (here encoded as colour):</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">"energy"</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">"time_signature"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">train</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bw</span><span class="o">=</span><span class="mf">0.03</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="s2">"key"</span><span class="p">,</span> <span class="s2">"time_signature"</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="s2">"energy"</span><span class="p">))</span> 
+ <span class="o">+</span> <span class="n">geom_tile</span><span class="p">()</span>
+ <span class="o">+</span> <span class="n">theme</span><span class="p">(</span><span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+ <span class="o">+</span> <span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">breaks</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">12</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We find:</p>
+<ul>
+<li>
+<p>For time_signatures 2 and 5 we have no instances of key == 11. This is no big surprise, since those three values are already rare individually, which makes their combinations even more rare.</p>
+</li>
+<li>
+<p>There are no clear clusters of high vs low energy features here.</p>
+</li>
+<li>
+<p>We can see certain combinations that are particularly low energy, such as key == 2 and time_signature == 1 or 8. key == 3 and time_signature == 1 seems to be a particularly energetic combination.</p>
+</li>
+</ul>
+<h3 id="5.3.-Feature-Target-Interaction">
+<a class="anchor" href="#5.3.-Feature-Target-Interaction" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.3. Feature Target Interaction<a class="anchor-link" href="#5.3.-Feature-Target-Interaction"> </a>
+</h3>
+<p>Once we have found interesting correlations we can look for clustering in the target variable.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="s1">'key'</span><span class="p">,</span> <span class="s1">'time_signature'</span><span class="p">))</span> 
+ <span class="o">+</span> <span class="n">geom_tile</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s1">'energy'</span><span class="p">))</span> 
+ <span class="o">+</span> <span class="n">facet_wrap</span><span class="p">(</span><span class="s2">"song_popularity"</span><span class="p">,</span> <span class="n">nrow</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> 
+ <span class="o">+</span> <span class="n">theme_minimal</span><span class="p">()</span> 
+ <span class="o">+</span> <span class="n">theme</span><span class="p">(</span><span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+ <span class="o">+</span> <span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">breaks</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">12</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">"energy"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"audio_valence"</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">"song_popularity"</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"kde"</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">"energy"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"acousticness"</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">"song_popularity"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="More-Resources:">
+<a class="anchor" href="#More-Resources:" aria-hidden="true"><span class="octicon octicon-link"></span></a>More Resources:<a class="anchor-link" href="#More-Resources:"> </a>
+</h3>
+<ul>
+<li><a href="https://seaborn.pydata.org/tutorial/color_palettes.html#palette-tutorial">Choosing different color palette in Seaborn</a></li>
+<li>See also<ul>
+<li>
+<a href="https://seaborn.pydata.org/generated/seaborn.PairGrid.html#seaborn.PairGrid">PairGrid</a>: Subplot grid for plotting pairwise relationships</li>
+<li>
+<a href="https://seaborn.pydata.org/generated/seaborn.relplot.html#seaborn.relplot">relplot</a>: Combine a relational plot and a FacetGrid</li>
+<li>
+<a href="https://seaborn.pydata.org/generated/seaborn.displot.html#seaborn.displot">displot</a>: Combine a distribution plot and a FacetGrid</li>
+<li>
+<a href="https://seaborn.pydata.org/generated/seaborn.catplot.html#seaborn.catplot">catplot</a>: Combine a categorical plot and a FacetGrid</li>
+<li>
+<a href="https://seaborn.pydata.org/generated/seaborn.lmplot.html#seaborn.lmplot">lmplot</a>: Combine a regression plot and a FacetGrid</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Special Thanks to <a href="https://www.kaggle.com/headsortails">Martin Henze</a> for sharing his knowledge during the live coding session. Also, thank you <a href="https://www.kaggle.com/abhishek">Abhishek Thakur</a> for hosting these wonderful sessions for people to learn. I look forward to learn more.</p>
+<p>Share if you liked it, comment if you loved it. Hope to see you guys in the next one. Peace!</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="sagar118/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/kaggle/2022/01/27/Song-Popularity-EDA.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A blog on Algorithms, Data Science and Artificial Intelligence.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/sagar118" target="_blank" title="sagar118"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/sagar118" target="_blank" title="sagar118"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/sagarthacker118" target="_blank" title="sagarthacker118"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
